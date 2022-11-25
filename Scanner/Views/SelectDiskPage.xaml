@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="Scanner.Views.SelectDiskPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:m="clr-namespace:Scanner.Models"
+             xmlns:vm="clr-namespace:Scanner.ViewModels"
+             xmlns:prop="clr-namespace:Scanner.Properties"
+             xmlns:local="clr-namespace:Scanner.Views"
+             d:DataContext="{d:DesignInstance Type=vm:SelectDiskViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+    
+    <Grid
+        VerticalAlignment="Center"
+        Margin="65,30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock
+            Grid.Row="0"
+            Text="{x:Static prop:Resources.SelectDescription}"
+            FontSize="25" Margin="0,0,0,75"
+            HorizontalAlignment="Center"/>
+        <ScrollViewer
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalAlignment="Stretch">
+            <ItemsControl
+                ItemsSource="{Binding Disks}"
+                HorizontalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="m:DiskModel">
+                        <Border
+                            Width="200"
+                            BorderThickness="1"
+                            BorderBrush="Gray"
+                            Cursor="Hand"
+                            Margin="10">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        FontSize="17"
+                                        Padding="12,12,0,12">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} ({1})">
+                                                <Binding Path="DLabel"/>
+                                                <Binding Path="DName"/>
+                                            </MultiBinding> 
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <Border
+                                        Grid.Column="1"
+                                        Background="DarkViolet"
+                                        VerticalAlignment="Top"
+                                        Visibility="{Binding IsPortable,
+                                            Converter={StaticResource BoolToVis}}">
+                                        <TextBlock
+                                            Text="{x:Static prop:Resources.PortableMark}"
+                                            FontSize="10"
+                                            Foreground="White"
+                                            Margin="10,3"/>
+                                    </Border>
+                                </Grid>
+                                
+                                <ProgressBar
+                                    Height="25"
+                                    Value="{Binding DUsage, Mode=OneWay}"
+                                    HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                            
+                            <Border.InputBindings>
+                                <MouseBinding
+                                    Gesture="LeftDoubleClick"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                        Path=DataContext.SelectCommand}"
+                                    CommandParameter="{Binding}"/>
+                            </Border.InputBindings>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
