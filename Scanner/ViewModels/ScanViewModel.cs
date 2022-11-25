@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -53,7 +54,7 @@ namespace Scanner.ViewModels
                 return e;
             });
 
-        public ObservableCollection<string> Images { get; set; }
+        public ObservableCollection<Image> Images { get; set; }
 
         public DelegateCommand StopCommand =>
             _stopCommand ?? (_stopCommand = new DelegateCommand(ExecuteStopCommand));
@@ -67,7 +68,7 @@ namespace Scanner.ViewModels
         public ScanViewModel()
         {
             Extensions = new List<ExtensionModel>();
-            Images = new ObservableCollection<string>();
+            Images = new ObservableCollection<Image>();
         }
 
         private void ExecuteStopCommand()
@@ -122,7 +123,7 @@ namespace Scanner.ViewModels
                                 Images.RemoveAt(9);
                             }
 
-                            Images.Insert(0, file);
+                            Images.Insert(0, Image.FromFile(file).GetThumbnailImage(64, 64, null, IntPtr.Zero));
                         });
                     }
 

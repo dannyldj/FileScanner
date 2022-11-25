@@ -106,6 +106,7 @@
     <Compile Include="Constants\PageKeys.cs" />
     <Compile Include="Constants\Regions.cs" />
     <Compile Include="Converters\FileSizeToStringConverter.cs" />
+    <Compile Include="Converters\ImageToSourceConverter.cs" />
     <Compile Include="Helpers\IRegionNavigationServiceExtensions.cs" />
     <Compile Include="Models\DiskModel.cs" />
     <Compile Include="Models\ExtensionModel.cs" />
