@@ -5,6 +5,8 @@
     xmlns:local="clr-namespace:Scanner"
     xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
-        
+        <Style TargetType="{x:Type FrameworkElement}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        </Style>
     </Application.Resources>
 </prism:PrismApplication>
