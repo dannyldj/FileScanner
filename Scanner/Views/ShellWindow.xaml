@@ -9,7 +9,7 @@
         d:DataContext="{d:DesignInstance d:Type=vm:ShellViewModel}"
         mc:Ignorable="d"
         Title="Scanner" Height="640" Width="815"
-        MinHeight="320" MinWidth="815"> 
+        MinHeight="410" MinWidth="815"> 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
