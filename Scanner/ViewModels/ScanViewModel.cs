@@ -116,14 +116,19 @@ namespace Scanner.ViewModels
                     var ex = Extensions.Where(e => e.Name == ext).FirstOrDefault();
                     if (imageExtensions.Contains(ext))
                     {
-                        DispatcherService.Invoke(() =>
+                        Task.Run(() =>
                         {
-                            if (Images.Count == 10)
-                            {
-                                Images.RemoveAt(9);
-                            }
+                            var thumbnail = Image.FromFile(file).GetThumbnailImage(64, 64, null, IntPtr.Zero);
 
-                            Images.Insert(0, Image.FromFile(file).GetThumbnailImage(64, 64, null, IntPtr.Zero));
+                            DispatcherService.Invoke(() =>
+                            {
+                                if (Images.Count == 10)
+                                {
+                                    Images.RemoveAt(9);
+                                }
+
+                                Images.Insert(0, thumbnail);
+                            });
                         });
                     }
 
